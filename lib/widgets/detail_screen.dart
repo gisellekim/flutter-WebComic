@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webcomic/models/webcomic_detail_model.dart';
@@ -23,12 +24,44 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   late Future<WebcomicDetailModel> webcomic;
   late Future<List<WebcomicEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  Future initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    final likedComics = prefs.getStringList('likedComics');
+    if (likedComics != null) {
+      if (likedComics.contains(widget.id) == true) {
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      await prefs.setStringList('likedComics', []);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webcomic = ApiService.getComicById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPrefs();
+  }
+
+  onHeartTap() async {
+    final likedComics = prefs.getStringList('likedComics');
+    if (likedComics != null) {
+      if (isLiked) {
+        likedComics.remove(widget.id);
+      } else {
+        likedComics.add(widget.id);
+      }
+      await prefs.setStringList('likedComics', likedComics);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
   }
 
   @override
@@ -39,6 +72,13 @@ class _DetailScreenState extends State<DetailScreen> {
         elevation: 1,
         foregroundColor: Colors.green,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: onHeartTap,
+            icon: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_outline_outlined),
+          ),
+        ],
         title: Text(
           widget.title,
           style: const TextStyle(
