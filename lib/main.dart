@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:webcomic/screens/home_screen.dart';
+import 'package:webcomic/services/api_service.dart';
 
 void main() {
+  ApiService().getTodaysComics();
   runApp(const App());
 }
 
@@ -9,12 +12,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Web Comic',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: Container(),
+    return const MaterialApp(
+      home: HomeScreen(),
     );
   }
 }
