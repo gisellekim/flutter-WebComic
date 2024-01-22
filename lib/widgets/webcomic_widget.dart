@@ -45,7 +45,7 @@ class Webcomic extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 16,
+            height: 32,
           ),
           Flexible(
             fit: FlexFit.loose,
@@ -54,7 +54,8 @@ class Webcomic extends StatelessWidget {
               softWrap: false,
               style: const TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
