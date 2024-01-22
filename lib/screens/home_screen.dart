@@ -5,7 +5,7 @@ import 'package:webcomic/services/api_service.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  Future<List<WebComicModel>> webcomics = ApiService.getTodaysComics();
+  final Future<List<WebComicModel>> webcomics = ApiService.getTodaysComics();
 
   @override
   Widget build(BuildContext context) {
