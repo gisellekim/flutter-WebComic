@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webcomic/models/webcomic_model.dart';
 import 'package:webcomic/services/api_service.dart';
+import 'package:webcomic/widgets/webcomic_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -56,33 +57,8 @@ class HomeScreen extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         var webcomic = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(10, 10),
-                      color: Colors.black.withOpacity(0.5),
-                    )
-                  ]),
-              width: 250,
-              child: Image.network(
-                webcomic.thumb,
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              webcomic.title,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-            ),
-          ],
-        );
+        return Webcomic(
+            title: webcomic.title, thumb: webcomic.thumb, id: webcomic.id);
       },
       separatorBuilder: (context, index) => const SizedBox(
         width: 40,
