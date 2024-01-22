@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
-        foregroundColor: Colors.green,
+        foregroundColor: Colors.grey,
         backgroundColor: Colors.white,
         title: const Text(
           "Today's Comic",
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             return Column(
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 100,
                 ),
                 Expanded(
                   child: makeList(snapshot),
@@ -43,6 +43,23 @@ class HomeScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         },
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        surfaceTintColor: Colors.white,
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                "Giselle Kim",
+                style: TextStyle(color: Colors.black38),
+              ),
+              Text(
+                "2024",
+                style: TextStyle(color: Colors.black38),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

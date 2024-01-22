@@ -70,13 +70,14 @@ class _DetailScreenState extends State<DetailScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,
-        foregroundColor: Colors.green,
+        foregroundColor: Colors.grey,
         backgroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: onHeartTap,
-            icon: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_outline_outlined),
+            icon: isLiked
+                ? const Icon(Icons.favorite, color: Colors.deepPurple)
+                : const Icon(Icons.favorite_outline_outlined),
           ),
         ],
         title: Text(
@@ -89,7 +90,10 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(52),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 52,
+            vertical: 40,
+          ),
           child: Column(
             children: [
               Row(
@@ -116,14 +120,21 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               FutureBuilder(
                 future: webcomic,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          ' ${snapshot.data!.genre} / ${snapshot.data!.age}',
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black45),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
                         Text(
                           snapshot.data!.about,
                           style: const TextStyle(
@@ -132,12 +143,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                         const SizedBox(
                           height: 16,
-                        ),
-                        Text(
-                          ' ${snapshot.data!.genre} / ${snapshot.data!.age}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
                         ),
                       ],
                     );
