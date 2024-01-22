@@ -2,28 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:webcomic/models/webcomic_model.dart';
 import 'package:webcomic/services/api_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<WebComicModel> webcomic = [];
-  bool isLoading = true;
-
-  void waitForWebComis() async {
-    webcomic = await ApiService.getTodaysComics();
-    isLoading = false;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    waitForWebComis();
-  }
+  Future<List<WebComicModel>> webcomics = ApiService.getTodaysComics();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.w400,
           ),
         ),
+      ),
+      body: FutureBuilder(
+        future: webcomics,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const Text('Data');
+          }
+          return const Text('Loading');
+        },
       ),
     );
   }
