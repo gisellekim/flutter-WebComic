@@ -3,7 +3,6 @@ import 'package:webcomic/screens/home_screen.dart';
 import 'package:webcomic/services/api_service.dart';
 
 void main() {
-  ApiService().getTodaysComics();
   runApp(const App());
 }
 
